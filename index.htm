@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/cc6fad79da.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-slate-600 h-screen">
+    <div class="flex flex-col justify-center items-center h-screen">
+        <img src="icon.png" alt="Logo Image here">
+        <h1 id="CountNumber" class="text-white text-3xl text-center mb-6"></h1>
+        <input class="border-2 w-64 p-2 rounded-full text-center hover:bg-white" id="numberInput" type="number" placeholder="Enter a number (1-100)" required>
+        <div class="flex gap-14 justify-center mt-6">
+            <button class="border-2 w-24 p-2 rounded-full hover:bg-green-600" id="submitButton" type="button">Submit</button>
+            
+            <button class="border-2 w-24 p-2 rounded-full hover:bg-red-600" id="resetButton" onclick="resetCall()"  type="button">Reset</button>
+        </div>
+        
+        <p id="resultMessage" class="mt-4 text-center"></p>
+        <h1 id="BigLine" class="text-3xl text-center"></h1>
+    </div>
+    
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let count = 10;
+        
+        
+        const input = document.getElementById("numberInput");
+        const resultMessage = document.getElementById("resultMessage");
+        const submitButton = document.getElementById("submitButton");
+        const resetButton = document.getElementById("resetButton");
+        const BigLine = document.getElementById("BigLine");
+        const CountNumber = document.getElementById("CountNumber");
+        CountNumber.textContent = `You have ${count} attempts.`;
+
+        submitButton.addEventListener("click", () => {
+            const userNumber = parseInt(input.value);
+            count =  count - 1;
+            CountNumber.textContent = `You have ${count} attempts.`;
+            if(count > 0){
+                BigLine.textContent = "";
+                if (isNaN(userNumber) || userNumber < 1 || userNumber > 100) {
+                    resultMessage.textContent = "Please enter a number between 1 and 100.";
+                    resultMessage.style.color = "red";
+                } else if (userNumber === randomNumber) {
+                    resultMessage.textContent = '';
+                    BigLine.textContent = "Congratulations! You guessed the correct number!";
+                    BigLine.style.color = "#16A34A";
+
+                } else {
+                    if(userNumber > randomNumber){
+                    resultMessage.textContent = 'You guessed is too High!';
+                    resultMessage.style.color = "red";
+
+                    }else{
+                    resultMessage.textContent = 'You guessed is too low!';
+                        resultMessage.style.color = "red";
+                    }                
+                }
+            }else{
+                BigLine.textContent = "Game Over. You Loss.";
+                BigLine.style.color = 'red';
+                resetCall();
+            }
+        });
+        function resetCall(){
+            input.value = "";
+            resultMessage.textContent = "";
+            randomNumber = Math.floor(Math.random() * 100) + 1; // Generate a new random number
+            count = 10;
+            CountNumber.textContent = `You have ${count} attempts.`;
+            BigLine.textContent ="";
+        }
+        </script>   
+</body>
+</html>
