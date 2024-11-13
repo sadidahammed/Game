@@ -50,6 +50,7 @@
                     BigLine.textContent = "Congratulations! You guessed the correct number!";
                     BigLine.style.color = "#16A34A";
 
+
                 } else {
                     if(userNumber > randomNumber){
                     resultMessage.textContent = 'You guessed is too High!';
@@ -60,10 +61,11 @@
                         resultMessage.style.color = "red";
                     }                
                 }
+            }else if(count < 0){
+                resetCall();
             }else{
                 BigLine.textContent = "Game Over. You Loss.";
                 BigLine.style.color = 'red';
-                resetCall();
             }
         });
         function resetCall(){
